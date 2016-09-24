@@ -1,3 +1,4 @@
+package game;
 
 public class Player
 {
@@ -20,7 +21,7 @@ public class Player
 	public String getName()
 	{
 		return name;
-		}
+	}
 	public int getBalance()
 	{
 		return balance;
