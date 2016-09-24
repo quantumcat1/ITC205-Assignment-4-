@@ -1,26 +1,27 @@
+<<<<<<< HEAD:src/src/game/Dice.java
 package game;
 
 public class Dice
 {
+=======
+public class Dice {
+			
+>>>>>>> parent of b12c512... Tidies up slightly:src/src/Dice.java
 	private DiceValue value;
-
-	public Dice()
-	{
+	
+	public Dice() {
 		value =  DiceValue.getRandom();
 	}
-
-	public DiceValue getValue()
-	{
+	
+	public DiceValue getValue() {
 		return value;
 	}
 
-	public DiceValue roll()
-	{
+	public DiceValue roll() {
 		return DiceValue.getRandom();
-	}
-
-	public String toString()
-	{
+	}		
+	
+	public String toString() {
 		return value.toString();
 	}
 }
