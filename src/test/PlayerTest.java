@@ -41,16 +41,19 @@ public class PlayerTest
 		player.setBalance(balance);
 	}
 
-	@Test
-	public void TestTakeBet()
-	{
-		/*indirectly we can test the "balance exceeds limits" functions.
-		 * We don't know what they're supposed to do or what their
-		 * purpose is exactly but one occurs in takeBet and has a
-		 * exception so we can do what the exception says and see if it
-		 * gets raised.
-		 */
+	/*indirectly we can test the "balance exceeds limits" functions.
+	 * We don't know what they're supposed to do or what their
+	 * purpose is exactly but one occurs in takeBet and has a
+	 * exception so we can do what the exception says and see if it
+	 * gets raised.
+	 */
 
+	//this test may get refined once I understand what is actually meant
+	//to be happening.
+
+	@Test
+	public void TestTakeBetNegative()
+	{
 		int bet = -1;
 		int balance = player.getBalance();
 		try
@@ -62,11 +65,24 @@ public class PlayerTest
 		{
 			assertEquals(true, e.getMessage().equals("Bet cannot be negative."));
 		}
+		finally
+		{
+			player.setBalance(balance);
+			/*just in case it changed - in finally block so it gets put back
+			 * whether or not an exception was thrown (so it won't affect the
+			 * other tests)
+			 */
+		}
+	}
 
-		player.setBalance(balance); //just in case it changed
 
+
+	@Test
+	public void TestTakeBetGood()
+	{
+		int balance = player.getBalance();
 		assertEquals(true, balance > 2); //so we can make sure we get a positive bet that is smaller than balance
-		bet = balance - 1;
+		int bet = balance - 1;
 
 		boolean bThrewException = true;
 		try
@@ -78,13 +94,24 @@ public class PlayerTest
 		{
 			assertEquals(true, false);//don't want an exception thrown
 		}
-		assertEquals(false, bThrewException);
+		finally
+		{
+			assertEquals(false, bThrewException);
+			player.setBalance(balance);
+			/*just in case it changed - in finally block so it gets put back
+			 * whether or not an exception was thrown (so it won't affect the
+			 * other tests)
+			 */
+		}
+	}
 
-		player.setBalance(balance); //just in case it changed
-
+	@Test
+	public void TestTakeBetBig()
+	{
 		int limit = player.getLimit();
+		int balance = player.getBalance();
 		player.setLimit(5);
-		bet = balance - player.getLimit() + 1;
+		int bet = balance - player.getLimit() + 1;
 
 		try
 		{
@@ -94,6 +121,15 @@ public class PlayerTest
 		catch(IllegalArgumentException e)
 		{
 			assertEquals(true, e.getMessage().equals("Placing bet would go below limit."));
+		}
+		finally
+		{
+			player.setBalance(balance);
+			player.setLimit(limit);
+			/*just in case it changed - in finally block so it gets put back
+			 * whether or not an exception was thrown (so it won't affect the
+			 * other tests)
+			 */
 		}
 	}
 }
