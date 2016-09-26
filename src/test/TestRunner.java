@@ -8,7 +8,14 @@ public class TestRunner
 {
 	public static void main(String[] args)
 	{
-		Result result = JUnitCore.runClasses(PlayerTest.class);
+		Result result = JUnitCore.runClasses(DiceValueTest.class);
+		for(Failure failure : result.getFailures())
+		{
+			System.out.println(failure.toString());
+		}
+		System.out.println("DiceValue unit testing success: " + result.wasSuccessful());
+
+		result = JUnitCore.runClasses(PlayerTest.class);
 		for(Failure failure : result.getFailures())
 		{
 			System.out.println(failure.toString());
