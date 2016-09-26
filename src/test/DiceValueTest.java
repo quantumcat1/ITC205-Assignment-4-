@@ -2,7 +2,7 @@ package test;
 
 import game.DiceValue;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
 import org.junit.Test;
 
@@ -16,24 +16,82 @@ public class DiceValueTest
 	 * a nonsense method. It is an instance method, yet you
 	 * have to give it a value as an argument? What about the
 	 * instance's value?)
+	 * - My suspicion is this will be a defect, maybe the
+	 * rules will say the game should say "Spade" not
+	 * "SPADE". In the very least it is a poor method,
+	 * since at first glance it looks like it is overriding
+	 * Object's toString() method when it isn't, it just has
+	 * a similar name.
 	 * - getRandom should return an int between 0 and 5
 	 */
 
-	public DiceValueTest ()
+	int randomResults[] = {0, 0, 0, 0, 0, 0};
+	/*
+	*this variable stores the number of times we
+	*roll each face after rolling 100 times
+	*('rolling' being calling getRandom).
+	*/
+
+	public DiceValueTest()
 	{
-		//can't make a new enum, so will have to use locals
+		RunRandoms();
+	}
+
+	public void RunRandoms()
+	{
+		DiceValue diceValue = DiceValue.getRandom();
+		for(int i = 0; i < 100; i ++)
+		{
+			if(diceValue.ordinal() < 0 || diceValue.ordinal() > 5)
+			{
+				assertEquals(true, false);
+			}
+			randomResults[diceValue.ordinal()] += 1;
+			diceValue = DiceValue.getRandom();
+		}
+	}
+
+	//Separate tests so I can tell which one failed
+	@Test
+	public void TestGetRandomsProducesCrown()
+	{
+		//we would expect to get at least some of each after 100 rolls.
+		assertEquals(true, randomResults[(DiceValue.CROWN).ordinal()] > 0);
 	}
 
 	@Test
-	public void TestGetRandom()
+	public void TestGetRandomsProducesAnchor()
 	{
-		DiceValue diceValue = DiceValue.getRandom();
-		for(int i = 0; i < 50; i ++)
-		{
-			assertEquals(true, diceValue.ordinal() > -1);
-			assertEquals(true, diceValue.ordinal() < 6);
-			diceValue = DiceValue.getRandom();
-		}
+		//we would expect to get at least some of each after 100 rolls.
+		assertEquals(true, randomResults[(DiceValue.ANCHOR).ordinal()] > 0);
+	}
+
+	@Test
+	public void TestGetRandomsProducesHeart()
+	{
+		//we would expect to get at least some of each after 100 rolls.
+		assertEquals(true, randomResults[(DiceValue.HEART).ordinal()] > 0);
+	}
+
+	@Test
+	public void TestGetRandomsProducesDiamond()
+	{
+		//we would expect to get at least some of each after 100 rolls.
+		assertEquals(true, randomResults[(DiceValue.DIAMOND).ordinal()] > 0);
+	}
+
+	@Test
+	public void TestGetRandomsProducesClub()
+	{
+		//we would expect to get at least some of each after 100 rolls.
+		assertEquals(true, randomResults[(DiceValue.CLUB).ordinal()] > 0);
+	}
+
+	@Test
+	public void TestGetRandomsProducesSpade()
+	{
+		//we would expect to get at least some of each after 100 rolls.
+		assertEquals(true, randomResults[(DiceValue.SPADE).ordinal()] > 0);
 	}
 
 	@Test
