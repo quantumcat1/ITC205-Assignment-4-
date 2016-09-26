@@ -6,6 +6,7 @@ import java.util.ArrayList;
 
 public class Game
 {
+	//why do we need DiceValues and Dice, when Dice contain a DiceValue instance variable?
 	private List<Dice> dice;
 	private List<DiceValue> values;
 
@@ -22,6 +23,17 @@ public class Game
 		values = new ArrayList<DiceValue>();
 	}
 
+	/*
+	 * Why do we need a separate list of DiceValues, when all we do is
+	 * populate the list based on the values of the list of Dice?
+	 * Why wouldn't we just use one list and then ask what the values
+	 * are at the time that we need to know them? This makes no sense.
+	 * Unless maybe we store the *prior* values so we can know the previous
+	 * roll and the current roll. But in that case it's a very badly named
+	 * variable! And in any case it would be better to have two lists of
+	 * the same object type, if one is storing the previous values of the
+	 * other.
+	 */
 	public List<DiceValue> getDiceValues()
 	{
 		values.clear();
@@ -38,6 +50,10 @@ public class Game
 		if (pick == null) throw new IllegalArgumentException("Pick cannot be negative.");
 		if (bet < 0) throw new IllegalArgumentException("Bet cannot be negative.");
 
+		/*why aren't we catching any exceptions here? Why is the compiler not complaining
+		 * that we haven't caught the possible exceptions or put "throws" after the
+		 * method name (playRound)????
+		 */
 		player.takeBet(bet);
 
 		int matches = 0;
@@ -58,4 +74,14 @@ public class Game
 		}
         return winnings;
 	}
+
+	/*
+	 * OK, one question is answered. Main uses "getDiceValues". But there is no
+	 * reason to make it an actual instance variable of Game! It should just
+	 * create this list for whenever Main wants it, but it doesn't need to store
+	 * it itself, since it never actually uses it. It's weird. I wonder if it's
+	 * related to any bugs? Probably not ... it's a little silly but I can't see
+	 * how it would actually hurt anything? Well, I'll keep it in the back of
+	 * my mind for now.
+	 */
 }
