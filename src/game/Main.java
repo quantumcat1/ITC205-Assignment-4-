@@ -8,7 +8,7 @@ public class Main
 	public static void main(String[] args) throws Exception
 	{
 		boolean bTestBug4 = false;
-		if(args[0] != null)
+		if(args.length > 0)
 		{
 			bTestBug4 = true;
 		}
