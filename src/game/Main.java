@@ -5,13 +5,22 @@ import java.io.*;
 
 public class Main
 {
-	public static void main(String[] args) throws Exception
+	public static int totalWins;
+	public static int totalLosses;
+
+	public static void main(String[] args) throws IOException
 	{
-		boolean bTestBug4 = false;
+		boolean bSupressGeneralMessages = false;
+		boolean bSupressRollMessages = false;
 		if(args.length > 0)
 		{
-			bTestBug4 = true;
+			bSupressGeneralMessages = true;
+			if(args[0].equals("7"))
+			{
+				bSupressRollMessages = true;
+			}
 		}
+
 		BufferedReader console = new BufferedReader(new InputStreamReader(System.in));
 
         Dice d1 = new Dice();
@@ -22,11 +31,11 @@ public class Main
         Game game = new Game(d1, d2, d3);
         List<DiceValue> cdv = game.getDiceValues();
 
-        int totalWins = 0;
-        int totalLosses = 0;
+        totalWins = 0;
+        totalLosses = 0;
 
-        while (true)
-        {
+/*        while (true)
+        {*/
             int winCount = 0;
             int loseCount = 0;
 
@@ -39,7 +48,7 @@ public class Main
                 player.setLimit(limit);
                 int bet = 5;
 
-                if(!bTestBug4)
+                if(!bSupressGeneralMessages)
                 {
 	                System.out.println(String.format("Start Game %d: ", i));
 	                System.out.println(String.format("%s starts with balance %d, limit %d",
@@ -52,7 +61,7 @@ public class Main
                     turn++;
                 	DiceValue pick = DiceValue.getRandom();
 
-                	if(!bTestBug4)
+                	if(!bSupressGeneralMessages)
                 	{
 	                	System.out.printf("Turn %d: %s bet %d on %s\n",
 	                			turn, player.getName(), bet, pick);
@@ -61,12 +70,15 @@ public class Main
                 	int winnings = game.playRound(player, pick, bet);
                     cdv = game.getDiceValues();
 
-                    System.out.printf("Rolled %s, %s, %s\n",
-                    		cdv.get(0), cdv.get(1), cdv.get(2));
+                    if(!bSupressRollMessages)
+                    {
+	                    System.out.printf("Rolled %s, %s, %s\n",
+	                    		cdv.get(0), cdv.get(1), cdv.get(2));
+                    }
 
                     if (winnings > 0)
                     {
-                    	if(!bTestBug4)
+                    	if(!bSupressGeneralMessages)
                     	{
 		                    System.out.printf("%s won %d, balance now %d\n\n",
 		                    		player.getName(), winnings, player.getBalance());
@@ -75,7 +87,7 @@ public class Main
                     }
                     else
                     {
-                    	if(!bTestBug4)
+                    	if(!bSupressGeneralMessages)
                     	{
 		                    System.out.printf("%s lost, balance now %d\n\n",
 		                    		player.getName(), player.getBalance());
@@ -84,27 +96,28 @@ public class Main
                     }
 
                 } //while
-                if(!bTestBug4)
+                if(!bSupressGeneralMessages)
                 {
                 	System.out.print(String.format("%d turns later.\nEnd Game %d: ", turn, i));
                 	System.out.println(String.format("%s now has balance %d\n", player.getName(), player.getBalance()));
                 }
             } //for
 
-            if(!bTestBug4)
+            if(!bSupressGeneralMessages)
             {
             	System.out.println(String.format("Win count = %d, Lose Count = %d, %.2f", winCount, loseCount, (float) winCount/(winCount+loseCount)));
             }
             totalWins += winCount;
             totalLosses += loseCount;
 
-            String ans = console.readLine();
+/*            String ans = console.readLine();
             if (ans.equals("q")) break;
         } //while true
-
-        if(!bTestBug4)
+*/
+        if(!bSupressGeneralMessages)
         {
         	System.out.println(String.format("Overall win rate = %.1f%%", (float)(totalWins * 100) / (totalWins + totalLosses)));
         }
+        return;
 	}
 }
