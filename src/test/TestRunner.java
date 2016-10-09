@@ -21,5 +21,12 @@ public class TestRunner
 			System.out.println(failure.toString());
 		}
 		System.out.println("Player unit testing success: " + result.wasSuccessful());
+
+		result = JUnitCore.runClasses(GameTest.class);
+		for(Failure failure : result.getFailures())
+		{
+			System.out.println(failure.toString());
+		}
+		System.out.println("Game unit testing success: " + result.wasSuccessful());
 	}
 }

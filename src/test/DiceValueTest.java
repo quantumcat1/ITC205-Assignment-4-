@@ -44,7 +44,7 @@ public class DiceValueTest
 		{
 			if(diceValue.ordinal() < 0 || diceValue.ordinal() > 5)
 			{
-				assertEquals(true, false);
+				assertEquals(true, false); //should be between 0 and 5
 			}
 			randomResults[diceValue.ordinal()] += 1;
 			diceValue = DiceValue.getRandom();

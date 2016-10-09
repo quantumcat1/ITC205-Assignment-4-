@@ -6,7 +6,7 @@ public class Bug4Replication
 {
 	public static void main(String[] args) throws Exception
 	{
-		String[] argsTest = {"t"};
+		String[] argsTest = {"4"};
 		Main.main(argsTest);
 	}
 }

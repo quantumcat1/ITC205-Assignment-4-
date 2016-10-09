@@ -94,6 +94,10 @@ public class Main
                     	}
 	                	loseCount++;
                     }
+                    if(player.getBalance() - bet == player.getLimit())
+                    {
+                    	int kitty = 0;
+                    }
 
                 } //while
                 if(!bSupressGeneralMessages)
@@ -118,6 +122,5 @@ public class Main
         {
         	System.out.println(String.format("Overall win rate = %.1f%%", (float)(totalWins * 100) / (totalWins + totalLosses)));
         }
-        return;
 	}
 }
