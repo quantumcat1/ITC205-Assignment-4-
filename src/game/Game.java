@@ -50,10 +50,6 @@ public class Game
 		if (pick == null) throw new IllegalArgumentException("Pick cannot be negative.");
 		if (bet < 0) throw new IllegalArgumentException("Bet cannot be negative.");
 
-		/*why aren't we catching any exceptions here? Why is the compiler not complaining
-		 * that we haven't caught the possible exceptions or put "throws" after the
-		 * method name (playRound)????
-		 */
 		player.takeBet(bet);
 
 		int matches = 0;
